@@ -48,7 +48,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ItemCollectionViewCell *itemCell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ItemCollectionViewCell class]) forIndexPath:indexPath];
-    itemCell.text = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.section, (long)indexPath.row];
+    if (indexPath.section == 0) {
+        itemCell.text = [NSString stringWithFormat:@"Fila %ld", (long)indexPath.row + 1];
+    } else {
+        itemCell.text = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.row + 1, (long)indexPath.section];
+    }
     return itemCell;
 }
 

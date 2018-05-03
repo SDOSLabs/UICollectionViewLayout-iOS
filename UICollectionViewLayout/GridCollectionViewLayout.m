@@ -8,7 +8,11 @@
 
 #import "GridCollectionViewLayout.h"
 
-#define ITEM_SIZE 50
+#define ZINDEX_ITEMS 500
+#define ZINDEX_FIRST_COL_ITEMS 1000
+
+#define ITEM_WIDTH 70
+#define ITEM_HEIGHT 40
 
 @interface GridCollectionViewLayout()
 
@@ -22,10 +26,14 @@
 - (void)prepareLayout {
     [super prepareLayout];
     
+    if (self.itemAttributes) {
+        return;
+    }
+    
     self.itemAttributes = [NSMutableArray array];
     
-    CGFloat xOffset = self.collectionView.contentInset.left;
-    CGFloat yOffset = self.collectionView.contentInset.top;
+    CGFloat xOffset = 0;
+    CGFloat yOffset = 0;
     
     NSUInteger numberOfColumns = [self.collectionView numberOfSections];
     NSUInteger numberOfRows = [self.collectionView numberOfItemsInSection:0];
@@ -37,14 +45,21 @@
             // para layoutAttributesForElementsInRect:
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:row inSection:column];
             UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-            attributes.frame = CGRectIntegral(CGRectMake(xOffset, yOffset, ITEM_SIZE, ITEM_SIZE));
+            attributes.frame = CGRectIntegral(CGRectMake(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT));
+            
+            if (column == 0) {
+                attributes.zIndex = ZINDEX_FIRST_COL_ITEMS;
+            } else {
+                attributes.zIndex = ZINDEX_ITEMS;
+            }
+            
             [sectionAttributes addObject:attributes];
             
-            xOffset = xOffset + ITEM_SIZE;
+            xOffset = xOffset + ITEM_WIDTH;
         }
         
         xOffset = 0;
-        yOffset = yOffset + ITEM_SIZE;
+        yOffset = yOffset + ITEM_HEIGHT;
         [self.itemAttributes addObject:sectionAttributes];
     }
     
@@ -68,6 +83,36 @@
     }
     
     return attributes;
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return self.itemAttributes[indexPath.row][indexPath.section];
+}
+
+#pragma mark - Invalidation
+
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+    [self updatePinnedItemsAttributesForBoundsChange:newBounds];
+    return YES;
+}
+
+- (void)updatePinnedItemsAttributesForBoundsChange:(CGRect)newBounds {
+    NSUInteger numberOfRows = [self.collectionView numberOfItemsInSection:0];
+    NSUInteger numberOfColumns = [self.collectionView numberOfSections];
+    for (int row = 0; row < numberOfRows; row++) {
+        for (NSUInteger column = 0; column < numberOfColumns; column++) {
+            if (row != 0 && column != 0) {
+                continue;
+            }
+            
+            UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:row inSection:column]];
+            if (column == 0) { // Fijamos los elementos de la primera columna
+                CGRect frame = attributes.frame;
+                frame.origin.x = newBounds.origin.x;
+                attributes.frame = frame;
+            }
+        }
+    }
 }
 
 @end
