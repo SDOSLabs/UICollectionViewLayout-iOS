@@ -13,6 +13,9 @@
 		8CBE844720920C5300A428F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CBE844620920C5300A428F2 /* Assets.xcassets */; };
 		8CBE844A20920C5300A428F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CBE844820920C5300A428F2 /* LaunchScreen.storyboard */; };
 		8CBE844D20920C5300A428F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBE844C20920C5300A428F2 /* main.m */; };
+		8CF405CB209B4C86008B32B8 /* GridCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF405CA209B4C86008B32B8 /* GridCollectionViewLayout.m */; };
+		8CF405D0209B4EB9008B32B8 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF405CE209B4EB9008B32B8 /* ItemCollectionViewCell.m */; };
+		8CF405D1209B4EB9008B32B8 /* ItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF405CF209B4EB9008B32B8 /* ItemCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,11 @@
 		8CBE844920920C5300A428F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8CBE844B20920C5300A428F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CBE844C20920C5300A428F2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8CF405C9209B4C86008B32B8 /* GridCollectionViewLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridCollectionViewLayout.h; sourceTree = "<group>"; };
+		8CF405CA209B4C86008B32B8 /* GridCollectionViewLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridCollectionViewLayout.m; sourceTree = "<group>"; };
+		8CF405CD209B4EB9008B32B8 /* ItemCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemCollectionViewCell.h; sourceTree = "<group>"; };
+		8CF405CE209B4EB9008B32B8 /* ItemCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemCollectionViewCell.m; sourceTree = "<group>"; };
+		8CF405CF209B4EB9008B32B8 /* ItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,7 @@
 		8CBE843C20920C5000A428F2 /* UICollectionViewLayout */ = {
 			isa = PBXGroup;
 			children = (
+				8CF405CC209B4E46008B32B8 /* Cells */,
 				8CBE843D20920C5000A428F2 /* AppDelegate.h */,
 				8CBE843E20920C5000A428F2 /* AppDelegate.m */,
 				8CBE844020920C5000A428F2 /* ViewController.h */,
@@ -67,8 +76,20 @@
 				8CBE844820920C5300A428F2 /* LaunchScreen.storyboard */,
 				8CBE844B20920C5300A428F2 /* Info.plist */,
 				8CBE844C20920C5300A428F2 /* main.m */,
+				8CF405C9209B4C86008B32B8 /* GridCollectionViewLayout.h */,
+				8CF405CA209B4C86008B32B8 /* GridCollectionViewLayout.m */,
 			);
 			path = UICollectionViewLayout;
+			sourceTree = "<group>";
+		};
+		8CF405CC209B4E46008B32B8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8CF405CD209B4EB9008B32B8 /* ItemCollectionViewCell.h */,
+				8CF405CE209B4EB9008B32B8 /* ItemCollectionViewCell.m */,
+				8CF405CF209B4EB9008B32B8 /* ItemCollectionViewCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CBE844A20920C5300A428F2 /* LaunchScreen.storyboard in Resources */,
+				8CF405D1209B4EB9008B32B8 /* ItemCollectionViewCell.xib in Resources */,
 				8CBE844720920C5300A428F2 /* Assets.xcassets in Resources */,
 				8CBE844520920C5000A428F2 /* Main.storyboard in Resources */,
 			);
@@ -141,6 +163,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CF405D0209B4EB9008B32B8 /* ItemCollectionViewCell.m in Sources */,
+				8CF405CB209B4C86008B32B8 /* GridCollectionViewLayout.m in Sources */,
 				8CBE844220920C5000A428F2 /* ViewController.m in Sources */,
 				8CBE844D20920C5300A428F2 /* main.m in Sources */,
 				8CBE843F20920C5000A428F2 /* AppDelegate.m in Sources */,
