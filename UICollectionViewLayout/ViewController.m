@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "GridCollectionViewLayout.h"
 #import "ItemCollectionViewCell.h"
+#import "ShadowCollectionReusableView.h"
 
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -21,9 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self registerCells];
-    
     self.collectionView.collectionViewLayout = [GridCollectionViewLayout new];
+    [self registerCells];
     [self.collectionView reloadData];
 }
 
@@ -36,6 +36,9 @@
 - (void)registerCells {
     UINib *itemNib = [UINib nibWithNibName:NSStringFromClass([ItemCollectionViewCell class]) bundle:nil];
     [self.collectionView registerNib:itemNib forCellWithReuseIdentifier:NSStringFromClass([ItemCollectionViewCell class])];
+    
+    UINib *shadowNib = [UINib nibWithNibName:NSStringFromClass([ShadowCollectionReusableView class]) bundle:nil];
+    [self.collectionView.collectionViewLayout registerNib:shadowNib forDecorationViewOfKind:CollectionElementKindGridVerticalShadow];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

@@ -9,14 +9,18 @@
 #import "GridCollectionViewLayout.h"
 
 #define ZINDEX_ITEMS 500
+#define ZINDEX_SHADOW 750
 #define ZINDEX_FIRST_COL_ITEMS 1000
 
 #define ITEM_WIDTH 70
 #define ITEM_HEIGHT 40
 
+NSString *const CollectionElementKindGridVerticalShadow = @"CollectionElementKindGridVerticalShadow";
+
 @interface GridCollectionViewLayout()
 
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *itemAttributes;
+@property (nonatomic, strong) UICollectionViewLayoutAttributes *shadowAttributes;
 @property (nonatomic, assign) CGSize contentSize;
 
 @end
@@ -30,6 +34,11 @@
         return;
     }
     
+    [self generateItemAttributes];
+    [self generateShadowAttributes];
+}
+
+- (void)generateItemAttributes {
     self.itemAttributes = [NSMutableArray array];
     
     CGFloat xOffset = 0;
@@ -42,7 +51,7 @@
         NSMutableArray *sectionAttributes = [NSMutableArray array];
         for (NSUInteger column = 0; column < numberOfColumns; column++) {
             // Creamos UICollectionViewLayoutAttributes para cada elemento y los añadimos al array de atributos. Lo utilizaremos después
-            // para layoutAttributesForElementsInRect:
+            // para layoutAttributesForElementsInRect: y layoutAttributesForItemAtIndexPath:
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:row inSection:column];
             UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
             attributes.frame = CGRectIntegral(CGRectMake(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT));
@@ -70,6 +79,14 @@
     self.contentSize = CGSizeMake(contentWidth, contentHeight);
 }
 
+- (void)generateShadowAttributes {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:CollectionElementKindGridVerticalShadow withIndexPath:indexPath];
+    attributes.frame = CGRectIntegral(CGRectMake(0, 0, ITEM_WIDTH, self.contentSize.height));
+    attributes.zIndex = ZINDEX_SHADOW;
+    self.shadowAttributes = attributes;
+}
+
 - (CGSize)collectionViewContentSize {
     return self.contentSize;
 }
@@ -82,6 +99,7 @@
         }]]];
     }
     
+    [attributes addObject:self.shadowAttributes];
     return attributes;
 }
 
@@ -101,7 +119,7 @@
     NSUInteger numberOfColumns = [self.collectionView numberOfSections];
     for (int row = 0; row < numberOfRows; row++) {
         for (NSUInteger column = 0; column < numberOfColumns; column++) {
-            if (row != 0 && column != 0) {
+            if (column != 0) {
                 continue;
             }
             
@@ -113,6 +131,16 @@
             }
         }
     }
+    
+    CGRect shadowFrame = self.shadowAttributes.frame;
+    if (newBounds.origin.x > 0) {
+        shadowFrame.origin.x = newBounds.origin.x + ITEM_WIDTH - 1;
+        self.shadowAttributes.zIndex = ZINDEX_SHADOW;
+    } else {
+        shadowFrame.origin.x = 0;
+        self.shadowAttributes.zIndex = 0;
+    }
+    self.shadowAttributes.frame = shadowFrame;
 }
 
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C341D0B20AB389900698E89 /* ShadowCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C341D0920AB389900698E89 /* ShadowCollectionReusableView.m */; };
+		8C341D0C20AB389900698E89 /* ShadowCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C341D0A20AB389900698E89 /* ShadowCollectionReusableView.xib */; };
 		8CBE843F20920C5000A428F2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBE843E20920C5000A428F2 /* AppDelegate.m */; };
 		8CBE844220920C5000A428F2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CBE844120920C5000A428F2 /* ViewController.m */; };
 		8CBE844520920C5000A428F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8CBE844320920C5000A428F2 /* Main.storyboard */; };
@@ -19,6 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8C341D0820AB389900698E89 /* ShadowCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShadowCollectionReusableView.h; sourceTree = "<group>"; };
+		8C341D0920AB389900698E89 /* ShadowCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShadowCollectionReusableView.m; sourceTree = "<group>"; };
+		8C341D0A20AB389900698E89 /* ShadowCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShadowCollectionReusableView.xib; sourceTree = "<group>"; };
 		8CBE843A20920C5000A428F2 /* UICollectionViewLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UICollectionViewLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CBE843D20920C5000A428F2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8CBE843E20920C5000A428F2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -88,6 +93,9 @@
 				8CF405CD209B4EB9008B32B8 /* ItemCollectionViewCell.h */,
 				8CF405CE209B4EB9008B32B8 /* ItemCollectionViewCell.m */,
 				8CF405CF209B4EB9008B32B8 /* ItemCollectionViewCell.xib */,
+				8C341D0820AB389900698E89 /* ShadowCollectionReusableView.h */,
+				8C341D0920AB389900698E89 /* ShadowCollectionReusableView.m */,
+				8C341D0A20AB389900698E89 /* ShadowCollectionReusableView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -151,6 +159,7 @@
 			files = (
 				8CBE844A20920C5300A428F2 /* LaunchScreen.storyboard in Resources */,
 				8CF405D1209B4EB9008B32B8 /* ItemCollectionViewCell.xib in Resources */,
+				8C341D0C20AB389900698E89 /* ShadowCollectionReusableView.xib in Resources */,
 				8CBE844720920C5300A428F2 /* Assets.xcassets in Resources */,
 				8CBE844520920C5000A428F2 /* Main.storyboard in Resources */,
 			);
@@ -164,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CF405D0209B4EB9008B32B8 /* ItemCollectionViewCell.m in Sources */,
+				8C341D0B20AB389900698E89 /* ShadowCollectionReusableView.m in Sources */,
 				8CF405CB209B4C86008B32B8 /* GridCollectionViewLayout.m in Sources */,
 				8CBE844220920C5000A428F2 /* ViewController.m in Sources */,
 				8CBE844D20920C5300A428F2 /* main.m in Sources */,
