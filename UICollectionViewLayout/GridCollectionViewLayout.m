@@ -15,12 +15,14 @@
 #define ITEM_WIDTH 70
 #define ITEM_HEIGHT 40
 
+NSString *const CollectionElementKindGridHeader = @"CollectionElementKindGridHeader";
 NSString *const CollectionElementKindGridVerticalShadow = @"CollectionElementKindGridVerticalShadow";
 
 @interface GridCollectionViewLayout()
 
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *itemAttributes;
 @property (nonatomic, strong) UICollectionViewLayoutAttributes *shadowAttributes;
+@property (nonatomic, strong) UICollectionViewLayoutAttributes *headerAttributes;
 @property (nonatomic, assign) CGSize contentSize;
 
 @end
@@ -36,13 +38,14 @@ NSString *const CollectionElementKindGridVerticalShadow = @"CollectionElementKin
     
     [self generateItemAttributes];
     [self generateShadowAttributes];
+    [self generateHeaderAttributes];
 }
 
 - (void)generateItemAttributes {
     self.itemAttributes = [NSMutableArray array];
     
     CGFloat xOffset = 0;
-    CGFloat yOffset = 0;
+    CGFloat yOffset = [self headerHeight];
     
     NSUInteger numberOfColumns = [self.collectionView numberOfSections];
     NSUInteger numberOfRows = [self.collectionView numberOfItemsInSection:0];
@@ -82,13 +85,20 @@ NSString *const CollectionElementKindGridVerticalShadow = @"CollectionElementKin
 - (void)generateShadowAttributes {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:CollectionElementKindGridVerticalShadow withIndexPath:indexPath];
-    attributes.frame = CGRectIntegral(CGRectMake(0, 0, ITEM_WIDTH, self.contentSize.height));
+    attributes.frame = CGRectIntegral(CGRectMake(0, [self headerHeight], ITEM_WIDTH, self.contentSize.height));
     attributes.zIndex = ZINDEX_SHADOW;
     self.shadowAttributes = attributes;
 }
 
 - (CGSize)collectionViewContentSize {
     return self.contentSize;
+}
+
+- (void)generateHeaderAttributes {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:CollectionElementKindGridHeader withIndexPath:indexPath];
+    attributes.frame = CGRectIntegral(CGRectMake(0, 0, self.contentSize.width, [self headerHeight]));
+    self.headerAttributes = attributes;
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -100,6 +110,11 @@ NSString *const CollectionElementKindGridVerticalShadow = @"CollectionElementKin
     }
     
     [attributes addObject:self.shadowAttributes];
+    
+    if (CGRectIntersectsRect(rect, self.headerAttributes.frame)) {
+        [attributes addObject:self.headerAttributes];
+    }
+    
     return attributes;
 }
 
@@ -141,6 +156,20 @@ NSString *const CollectionElementKindGridVerticalShadow = @"CollectionElementKin
         self.shadowAttributes.zIndex = 0;
     }
     self.shadowAttributes.frame = shadowFrame;
+    
+    CGRect headerFrame = self.headerAttributes.frame;
+    headerFrame.origin.x = newBounds.origin.x;
+    self.headerAttributes.frame = headerFrame;
+}
+
+#pragma mark - Helper methods
+
+- (CGFloat)headerHeight {
+    if ([self.collectionView.delegate respondsToSelector:@selector(collectionView:heightForHeaderInLayout:)]) {
+        return [(id<GridCollectionViewLayoutDelegate>)self.collectionView.delegate collectionView:self.collectionView heightForHeaderInLayout:self];
+    }
+    
+    return 0;
 }
 
 @end

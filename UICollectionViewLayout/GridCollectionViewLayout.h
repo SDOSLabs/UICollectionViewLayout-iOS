@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const CollectionElementKindGridHeader;
 extern NSString *const CollectionElementKindGridVerticalShadow;
+
+@class GridCollectionViewLayout;
+
+@protocol GridCollectionViewLayoutDelegate <UICollectionViewDelegate>
+
+@optional
+- (CGFloat)collectionView:(UICollectionView *)collectionView heightForHeaderInLayout:(GridCollectionViewLayout *)collectionViewLayout;
+
+@end
 
 @interface GridCollectionViewLayout : UICollectionViewLayout
 

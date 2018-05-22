@@ -10,8 +10,9 @@
 #import "GridCollectionViewLayout.h"
 #import "ItemCollectionViewCell.h"
 #import "ShadowCollectionReusableView.h"
+#import "HeaderCollectionReusableView.h"
 
-@interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, GridCollectionViewLayoutDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
@@ -39,6 +40,9 @@
     
     UINib *shadowNib = [UINib nibWithNibName:NSStringFromClass([ShadowCollectionReusableView class]) bundle:nil];
     [self.collectionView.collectionViewLayout registerNib:shadowNib forDecorationViewOfKind:CollectionElementKindGridVerticalShadow];
+    
+    UINib *headerNib = [UINib nibWithNibName:NSStringFromClass([HeaderCollectionReusableView class]) bundle:nil];
+    [self.collectionView registerNib:headerNib forSupplementaryViewOfKind:CollectionElementKindGridHeader withReuseIdentifier:NSStringFromClass([HeaderCollectionReusableView class])];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -57,6 +61,16 @@
         itemCell.text = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.row + 1, (long)indexPath.section];
     }
     return itemCell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:CollectionElementKindGridHeader withReuseIdentifier:NSStringFromClass([HeaderCollectionReusableView class]) forIndexPath:indexPath];
+    headerView.title = @"Título";
+    return headerView;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView heightForHeaderInLayout:(GridCollectionViewLayout *)collectionViewLayout {
+    return 40;
 }
 
 @end
